@@ -1,0 +1,48 @@
+<!-- templates/new_url.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortened URL</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Your Shortened URL</h1>
+        <div class="mb-4 p-4 bg-gray-50 rounded flex items-center justify-between">
+            <input type="text" value="{{ url }}" id="shortUrl" readonly
+                class="w-full bg-transparent text-blue-500 outline-none cursor-default">
+            <button onclick="copyUrl()" 
+                class="ml-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded" 
+                id="copyButton">
+                Copy
+            </button>
+        </div>
+        <a href="{% url 'index' %}" 
+            class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            Shorten Another URL
+        </a>
+    </div>
+
+    <script>
+        function copyUrl() {
+            const urlInput = document.getElementById('shortUrl');
+            const copyButton = document.getElementById('copyButton');
+            
+            urlInput.select();
+            document.execCommand('copy');
+            
+            copyButton.textContent = 'Copied!';
+            copyButton.classList.replace('bg-green-500', 'bg-gray-500');
+            copyButton.classList.replace('hover:bg-green-600', 'hover:bg-gray-600');
+            
+            setTimeout(() => {
+                copyButton.textContent = 'Copy';
+                copyButton.classList.replace('bg-gray-500', 'bg-green-500');
+                copyButton.classList.replace('hover:bg-gray-600', 'hover:bg-green-600');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
